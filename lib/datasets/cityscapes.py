@@ -15,6 +15,8 @@ from torch.nn import functional as F
 
 from .base_dataset import BaseDataset
 
+import ipdb
+
 class Cityscapes(BaseDataset):
     def __init__(self, 
                  root, 
@@ -44,6 +46,9 @@ class Cityscapes(BaseDataset):
         self.img_list = [line.strip().split() for line in open(root+list_path)]
 
         self.files = self.read_files()
+
+        # ipdb.set_trace()
+
         if num_samples:
             self.files = self.files[:num_samples]
 
@@ -100,10 +105,11 @@ class Cityscapes(BaseDataset):
     def __getitem__(self, index):
         item = self.files[index]
         name = item["name"]
-        # image = cv2.imread(os.path.join(self.root,'cityscapes',item["img"]),
-        #                    cv2.IMREAD_COLOR)
-        image = cv2.imread(os.path.join(self.root, item["img"]),
+        image = cv2.imread(os.path.join(self.root,'cityscapes', item["img"]),
                            cv2.IMREAD_COLOR)
+        # image = cv2.imread(os.path.join(self.root, item["img"]),
+        #                    cv2.IMREAD_COLOR)
+
         size = image.shape
 
         if 'test' in self.list_path:
@@ -112,10 +118,10 @@ class Cityscapes(BaseDataset):
 
             return image.copy(), np.array(size), name
 
-        # label = cv2.imread(os.path.join(self.root,'cityscapes',item["label"]),
-        #                    cv2.IMREAD_GRAYSCALE)
-        label = cv2.imread(os.path.join(self.root, item["label"]),
+        label = cv2.imread(os.path.join(self.root,'cityscapes', item["label"]),
                            cv2.IMREAD_GRAYSCALE)
+        # label = cv2.imread(os.path.join(self.root, item["label"]),
+        #                    cv2.IMREAD_GRAYSCALE)
         label = self.convert_label(label)
 
         image, label = self.gen_sample(image, label, 

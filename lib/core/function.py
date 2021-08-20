@@ -22,6 +22,7 @@ from utils.utils import adjust_learning_rate
 
 import utils.distributed as dist
 
+import ipdb
 
 def reduce_tensor(inp):
     """
@@ -49,6 +50,7 @@ def train(config, epoch, num_epoch, epoch_iters, base_lr,
     writer = writer_dict['writer']
     global_steps = writer_dict['train_global_steps']
 
+    # ipdb.set_trace()
     for i_iter, batch in enumerate(trainloader, 0):
         images, labels, _, _ = batch
         images = images.cuda()

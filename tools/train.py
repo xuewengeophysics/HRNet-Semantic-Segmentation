@@ -33,6 +33,8 @@ from core.function import train, validate
 from utils.modelsummary import get_model_summary
 from utils.utils import create_logger, FullModel
 
+import ipdb
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Train segmentation network')
     
